@@ -1,0 +1,6 @@
+*Ignore node_modules
+**/server/node_modules/
+
+*Ignmore npm-debug.log
+npm-debug.log
+server/npm-debug.log
