@@ -4,3 +4,7 @@
 *Ignmore npm-debug.log
 npm-debug.log
 server/npm-debug.log
+
+*Ignore .DS_Store files
+.DS_Store
+server/.DS_Store

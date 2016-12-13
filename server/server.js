@@ -1,10 +1,18 @@
-var express = require('express');
+let express = require('express');
     path = require('path');
     logger = require('morgan');
     bodyParser = require('body-parser');
     app = express();
+    mongoose = require('mongoose');
+    db = require('./config/dbConfig');
 
-app.use(logger('dev'));
+// Don't show the log when it is test
+if(process.env.NODE_ENV != "test") {
+  // use morgan to log at command line
+  app.use(logger('combined')); // 'combined' outputs the Apache style logs
+}
+
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 
 app.all('/*', function(req, res, next) {
@@ -33,3 +41,5 @@ app.use(function(req, res, next) {
 app.listen(3000, function() {
   console.log("Express server listening on port 3000")
 })
+
+module.exports = app;
