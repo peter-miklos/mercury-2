@@ -1,8 +1,11 @@
+process.env.NODE_ENV ? process.env.NODE_ENV : process.env.NODE_ENV = "development";
+
 var express = require('express');
     path = require('path');
     logger = require('morgan');
     bodyParser = require('body-parser');
     app = express();
+    db = require("./bin/dbConfig");
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
