@@ -4,7 +4,7 @@ let express = require('express');
     bodyParser = require('body-parser');
     app = express();
     mongoose = require('mongoose');
-    db = require('./bin/dbConfig');
+    db = require('./config/dbConfig');
 
 // Don't show the log when it is test
 if(process.env.NODE_ENV != "test") {
