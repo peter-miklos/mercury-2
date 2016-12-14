@@ -29,7 +29,7 @@ let jwt = require('jwt-simple');
           res.json(genToken(dbUserObj));
         }
       },
-      
+
       validate: function (username, password) {
         // spoofing the DB response for simplicity
         let dbUserObj = { // spoofing a userobject from the DB.
