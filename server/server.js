@@ -14,9 +14,7 @@ if(process.env.NODE_ENV != "test") {
 }
 
 // app.use(logger('dev'));
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.json());
 
 app.all('/*', function(req, res, next) {
   // CORS headers

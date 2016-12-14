@@ -13,6 +13,7 @@
     "express": "^4.14.0",
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.7.2",
+    "mongoose-double": "0.0.1",
     "morgan": "^1.7.0"
   },
   "devDependencies": {

@@ -18,4 +18,4 @@ ProductSchema.pre('save', next => {
   next();
 })
 
-mongoose.model('product', ProductSchema);
+mongoose.model('Product', ProductSchema);
