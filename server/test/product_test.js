@@ -52,6 +52,117 @@ describe('Products', () => {
             done();
           })
     })
+
+    it("product cannot be save w/o category", (done) => {
+      let incompleteProduct = {
+        group: "group 1",
+        name: "test product",
+        price: 7.99,
+        origin: "Hungary"
+      }
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(incompleteProduct)
+          .end((err,res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.have.property('errors');
+            expect(res.body.errors).to.have.property('category');
+            expect(res.body.errors.category).to.have.property('kind').eql('required');
+            done();
+          })
+    })
+
+    it("product cannot be save w/o group", (done) => {
+      let incompleteProduct = {
+        category: "category 1",
+        name: "test product",
+        price: 7.99,
+        origin: "Hungary"
+      }
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(incompleteProduct)
+          .end((err,res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body.errors.group).to.have.property('kind').eql('required');
+            done();
+          })
+    })
+
+    it("product cannot be save w/o name", (done) => {
+      let incompleteProduct = {
+        group: "group 1",
+        category: "category 1",
+        price: 7.99,
+        origin: "Hungary"
+      }
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(incompleteProduct)
+          .end((err,res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body.errors.name).to.have.property('kind').eql('required');
+            done();
+          })
+    })
+
+    it("product cannot be save w/o price", (done) => {
+      let incompleteProduct = {
+        group: "group 1",
+        category: "category 1",
+        name: "product 1",
+        origin: "Hungary"
+      }
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(incompleteProduct)
+          .end((err,res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body.errors.price).to.have.property('kind').eql('required');
+            done();
+          })
+    })
+
+    it("product cannot be save with price less than 0.01", (done) => {
+      let incompleteProduct = {
+        group: "group 1",
+        category: "category 1",
+        name: "product 1",
+        price: -3.00,
+        origin: "Hungary"
+      }
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(incompleteProduct)
+          .end((err,res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body.errors.price).to.have.property('message').eql('Price cannot be less than 0.01');
+            done();
+          })
+    })
+
+    it("product cannot be save w/o origin", (done) => {
+      let incompleteProduct = {
+        group: "group 1",
+        category: "category 1",
+        name: "product 1",
+        price: 7.99
+      }
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(incompleteProduct)
+          .end((err,res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body.errors.origin).to.have.property('kind').eql('required');
+            done();
+          })
+    })
   })
 
 })
