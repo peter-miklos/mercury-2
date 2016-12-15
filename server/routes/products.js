@@ -2,35 +2,35 @@ let mongoose = require('mongoose');
     product = require('../models/product');
     Product = mongoose.model('Product');
     products = {
-      getAll: function(req, res) {
+      getAll: (req, res) => {
         Product.find({}).exec((err, products) => {
           if(err) res.send(err);
           res.json(products);
         })
       },
 
-      getOne: function(req, res) {
-        let id = req.params.id
+      getOne: (req, res) => {
+        let id = req.params.id;
         Product.findOne({_id: id}).exec((err, product) => {
           if(err) res.send(err);
           res.json(product);
         })
       },
 
-      create: function(req, res) {
+      create: (req, res) => {
         Product.create({category: req.body.category,
                         group: req.body.group,
                         name: req.body.name,
                         price: req.body.price,
                         origin: req.body.origin
-        }, function(err, product) {
+        }, (err, product) => {
           if (err) res.send(err);
           res.json(product)
         })
       },
 
-      update: function(req, res) {
-        let id = req.params.id
+      update: (req, res) => {
+        let id = req.params.id;
         Product.findByIdAndUpdate(id, {$set: {
           category: req.body.category,
           group: req.body.group,
@@ -40,6 +40,14 @@ let mongoose = require('mongoose');
         }}, {new: true}, (err, product) => {
           if(err) res.send(err);
           res.json(product);
+        })
+      },
+
+      delete: (req, res) => {
+        let id = req.params.id;
+        Product.remove({_id: id}, (err) => {
+          if (err) res.send(err);
+          res.json("Product has been removed.")
         })
       }
 }

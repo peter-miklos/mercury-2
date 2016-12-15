@@ -251,8 +251,8 @@ describe('Products', () => {
             .delete(`/api/v1/product/${productInDb._id}`)
             .end((err, res) => {
               expect(res).to.have.status(200);
-              expect(res.body).to.be.a('object');
-              done();
+              expect(res.body).to.be.a('string');
+              expect(res.body).to.be.eql("Product has been removed.")
             })
         chai.request(server)
             .get('/api/v1/products')
