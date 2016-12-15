@@ -53,7 +53,7 @@ describe('Products', () => {
           })
     })
 
-    it("product cannot be save w/o category", (done) => {
+    it("does not save product w/o category", (done) => {
       let incompleteProduct = {
         group: "group 1",
         name: "test product",
@@ -73,7 +73,7 @@ describe('Products', () => {
           })
     })
 
-    it("product cannot be save w/o group", (done) => {
+    it("does not save product w/o group", (done) => {
       let incompleteProduct = {
         category: "category 1",
         name: "test product",
@@ -91,7 +91,7 @@ describe('Products', () => {
           })
     })
 
-    it("product cannot be save w/o name", (done) => {
+    it("does not save product w/o name", (done) => {
       let incompleteProduct = {
         group: "group 1",
         category: "category 1",
@@ -109,7 +109,7 @@ describe('Products', () => {
           })
     })
 
-    it("product cannot be save w/o price", (done) => {
+    it("does not save product w/o price", (done) => {
       let incompleteProduct = {
         group: "group 1",
         category: "category 1",
@@ -127,7 +127,7 @@ describe('Products', () => {
           })
     })
 
-    it("product cannot be save with price less than 0.01", (done) => {
+    it("does not save product with price less than 0.01", (done) => {
       let incompleteProduct = {
         group: "group 1",
         category: "category 1",
@@ -146,7 +146,7 @@ describe('Products', () => {
           })
     })
 
-    it("product cannot be save w/o origin", (done) => {
+    it("does not save product w/o origin", (done) => {
       let incompleteProduct = {
         group: "group 1",
         category: "category 1",
@@ -162,6 +162,57 @@ describe('Products', () => {
             expect(res.body.errors.origin).to.have.property('kind').eql('required');
             done();
           })
+    })
+  })
+
+  describe('/GET product', () => {
+    beforeEach((done) => {
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(product)
+          .end((err, res) => { done(); })
+    })
+
+    it('returns the product details', (done) => {
+      mongoose.model('Product').findOne({name: 'test product'}, (err, productInDb) => {
+        chai.request(server)
+            .get(`/api/v1/product/${productInDb._id}`)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body).to.be.a('object');
+              expect(res.body.category).to.be.eql("category 1");
+              expect(res.body.group).to.be.eql("group 1");
+              expect(res.body.name).to.be.eql("test product");
+              expect(res.body.price).to.be.eql(7.99);
+              expect(res.body.origin).to.be.eql("Hungary");
+              done();
+            })
+      })
+    })
+
+    it('returns error if unvalid product id is used', (done) => {
+      chai.request(server)
+          .get(`/api/v1/product/1`)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.have.property('name').eql('CastError');
+            done();
+          })
+    })
+  })
+
+  describe('/PUT product', () => {
+    xit('updates the product details', (done) => {
+
+    })
+  })
+
+  describe('/DELETE product', () => {
+    xit('deletes the product in db', (done) => {
+
     })
   })
 
