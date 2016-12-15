@@ -178,7 +178,6 @@ describe('Products', () => {
         chai.request(server)
             .get(`/api/v1/product/${productInDb._id}`)
             .end((err, res) => {
-              expect(err).to.be.null;
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('object');
               expect(res.body.category).to.be.eql("category 1");
@@ -205,14 +204,65 @@ describe('Products', () => {
   })
 
   describe('/PUT product', () => {
-    xit('updates the product details', (done) => {
+    beforeEach((done) => {
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(product)
+          .end((err, res) => { done(); })
+    })
 
+    it('updates the product details', (done) => {
+      let updatedProduct = {
+        category: "category 2",
+        group: "group 2",
+        name: "other product",
+        price: 17.99,
+        origin: "UK"
+      }
+      mongoose.model('Product').findOne({name: "test product"}, (err, productInDb) => {
+        chai.request(server)
+            .put(`/api/v1/product/${productInDb._id}`)
+            .send(updatedProduct)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).to.be.a('object');
+              expect(res.body.category).to.be.eql("category 2");
+              expect(res.body.group).to.be.eql("group 2");
+              expect(res.body.name).to.be.eql("other product");
+              expect(res.body.price).to.be.eql(17.99);
+              expect(res.body.origin).to.be.eql("UK");
+              done();
+            })
+      })
     })
   })
 
   describe('/DELETE product', () => {
-    xit('deletes the product in db', (done) => {
+    beforeEach((done) => {
+      chai.request(server)
+          .post('/api/v1/product')
+          .send(product)
+          .end((err, res) => { done(); })
+    })
 
+    it('deletes the product in db', (done) => {
+      mongoose.model('Product').findOne({name: "test product"}, (err, productInDb) => {
+        chai.request(server)
+            .delete(`/api/v1/product/${productInDb._id}`)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).to.be.a('object');
+              done();
+            })
+        chai.request(server)
+            .get('/api/v1/products')
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).to.be.a('array');
+              expect(res.body.length).to.be.eql(0);
+              done();
+            })
+      })
     })
   })
 
