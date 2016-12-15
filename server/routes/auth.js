@@ -1,4 +1,4 @@
-let jwt = require('jwt-simple');
+let jwt = require('jsonwebtoken');
     auth = {
       login: function(req, res) {
         let username = req.body.username || '';
@@ -55,11 +55,12 @@ let jwt = require('jwt-simple');
 }
 
 function genToken(user) {
-  let expires = expiresIn(7);
-  let token = jwt.encode({
+  let expires = expiresIn(1);
+  let token = jwt.sign({
     exp: expires,
-    sub: user.username
-  }, require('../config/secret')(), 'HS512');
+    iss: "http://localhost:3000",
+    user: user.username
+  }, require('../config/secret')(), { algorithm: 'HS512' });
 
   return {
     token: token,
@@ -68,9 +69,8 @@ function genToken(user) {
   };
 }
 
-function expiresIn(numDays) {
-  let currentDate = new Date();
-  return currentDate.setDate(currentDate.getDate() + numDays);
+function expiresIn(numHours) {
+  return Math.floor(Date.now() / 1000) + (60 * 60 * numHours)
 }
 
 module.exports = auth;
