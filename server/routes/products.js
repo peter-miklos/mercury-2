@@ -27,6 +27,20 @@ let mongoose = require('mongoose');
           if (err) res.send(err);
           res.json(product)
         })
+      },
+
+      update: function(req, res) {
+        let id = req.params.id
+        Product.findByIdAndUpdate(id, {$set: {
+          category: req.body.category,
+          group: req.body.group,
+          name: req.body.name,
+          price: req.body.price,
+          origin: req.body.origin
+        }}, {new: true}, (err, product) => {
+          if(err) res.send(err);
+          res.json(product);
+        })
       }
 }
 
