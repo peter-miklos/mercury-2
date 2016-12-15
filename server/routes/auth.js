@@ -49,7 +49,8 @@ let jwt = require('jwt-simple');
           role: 'admin',
           username: 'test1@test.com'
         };
-        return dbUserObj;
+        if (username == dbUserObj.username) {return dbUserObj;}
+        else {return 'undefined'}
       }
 }
 
@@ -57,7 +58,7 @@ function genToken(user) {
   let expires = expiresIn(7);
   let token = jwt.encode({
     exp: expires,
-    userId: user.id
+    sub: user.username
   }, require('../config/secret')(), 'HS512');
 
   return {
