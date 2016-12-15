@@ -30,7 +30,7 @@ app.all('/*', function(req, res, next) {
 
 // app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
 
-// app.use('/', require('./routes'));
+app.use('/', require('./routes'));
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

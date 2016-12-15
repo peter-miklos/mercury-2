@@ -2,7 +2,7 @@ let express = require('express');
     router = express.Router();
     auth = require('./auth.js');
     products = require('./products.js');
-    user = require('./users.js');
+    // user = require('./users.js');
 
 // Routes that can be accessed by anyone
 router.post('/login', auth.login);
@@ -15,10 +15,10 @@ router.put('/api/v1/product/:id', products.update);
 router.delete('/api/v1/product/:id', products.delete);
 
 // Routes that can be access only by authenticated and authorized users
-router.get('/api/v1/users', users.getAll);
-router.get('/api/v1/admin/user/:id', user.getOne);
-router.post('/api/v1/admin/user/', user.create);
-router.put('/api/v1/admin/user/:id', user.update);
-router.delete('/api/v1/admin/user/:id', user.delete);
+// router.get('/api/v1/users', users.getAll);
+// router.get('/api/v1/admin/user/:id', user.getOne);
+// router.post('/api/v1/admin/user/', user.create);
+// router.put('/api/v1/admin/user/:id', user.update);
+// router.delete('/api/v1/admin/user/:id', user.delete);
 
 module.exports = router;
