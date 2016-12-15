@@ -3,9 +3,9 @@ let jwt = require('jwt-simple');
 
 module.exports = (req, res, next) => {
   let token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
-  let key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
+  // let key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
 
-  if (token || key) {
+  if (token) {
     try {
       let decoded = jwt.decode(token, require('../config/secret.js')(), true, 'HS512');
 
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
         return;
       }
 
-      let dbUser = validateUser(key);
+      let dbUser = validateUser(decoded.sub);
       if (dbUser) {
         if ((req.url.indexOf('admin') >= 0 && dbUser.role == 'admin') || (req.url.indexOf('admin') < 0 && req.url.indexOf('/api/v1/') >= 0)) {
           next(); // To move to next middleware
