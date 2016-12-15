@@ -1,4 +1,3 @@
-process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 let express = require('express');
     path = require('path');
     logger = require('morgan');
