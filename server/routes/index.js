@@ -3,6 +3,22 @@ let express = require('express');
     auth = require('./auth.js');
     products = require('./products.js');
     // user = require('./users.js');
+    expressJWT = require('express-jwt');
+    jwt = require('jsonwebtoken');
+
+
+app.use(expressJWT({
+  secret: require('../config/secret.js')(),
+  credentialsRequired: true,
+  getToken: function fromHeaderOrQuerystring (req) {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+      return req.headers.authorization.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      return req.query.token;
+    }
+    return null;
+  }
+}).unless({ path: ['/login']}));
 
 // Routes that can be accessed by anyone
 router.post('/login', auth.login);
