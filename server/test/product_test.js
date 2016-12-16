@@ -3,8 +3,14 @@ let mongoose = require("mongoose");
     chaiHttp = require('chai-http');
     server = require('../server');
     expect = chai.expect;
-    product = "";
     token = "";
+    product = {
+      category: "category 1",
+      group: "group 1",
+      name: "test product",
+      price: 7.99,
+      origin: "Hungary"
+    }
 chai.use(chaiHttp);
 
 describe('Products', () => {
@@ -15,14 +21,6 @@ describe('Products', () => {
         .send({username: "test", password: "test"})
         .end((err, res) => {
           token = res.body.token;
-          product = {
-            category: "category 1",
-            group: "group 1",
-            name: "test product",
-            price: 7.99,
-            origin: "Hungary",
-            access_token: token
-          }
           done();
         })
   })
@@ -38,7 +36,8 @@ describe('Products', () => {
   describe('/GET products', () => {
     it('gets all the products', (done) => {
       chai.request(server)
-          .get(`/api/v1/products?access_token=${token}`)
+          .get(`/api/v1/products`)
+          .set('Authorization', `Bearer ${token}`)
           .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -53,6 +52,7 @@ describe('Products', () => {
     it("saves the product in the db", (done) => {
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(product)
           .end((err, res) => {
             expect(err).to.be.null;
@@ -72,11 +72,11 @@ describe('Products', () => {
         group: "group 1",
         name: "test product",
         price: 7.99,
-        origin: "Hungary",
-        access_token: token
+        origin: "Hungary"
       }
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(incompleteProduct)
           .end((err,res) => {
             expect(res).to.have.status(200);
@@ -93,11 +93,11 @@ describe('Products', () => {
         category: "category 1",
         name: "test product",
         price: 7.99,
-        origin: "Hungary",
-        access_token: token
+        origin: "Hungary"
       }
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(incompleteProduct)
           .end((err,res) => {
             expect(res).to.have.status(200);
@@ -112,11 +112,11 @@ describe('Products', () => {
         group: "group 1",
         category: "category 1",
         price: 7.99,
-        origin: "Hungary",
-        access_token: token
+        origin: "Hungary"
       }
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(incompleteProduct)
           .end((err,res) => {
             expect(res).to.have.status(200);
@@ -131,11 +131,11 @@ describe('Products', () => {
         group: "group 1",
         category: "category 1",
         name: "product 1",
-        origin: "Hungary",
-        access_token: token
+        origin: "Hungary"
       }
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(incompleteProduct)
           .end((err,res) => {
             expect(res).to.have.status(200);
@@ -151,11 +151,11 @@ describe('Products', () => {
         category: "category 1",
         name: "product 1",
         price: -3.00,
-        origin: "Hungary",
-        access_token: token
+        origin: "Hungary"
       }
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(incompleteProduct)
           .end((err,res) => {
             expect(res).to.have.status(200);
@@ -170,11 +170,11 @@ describe('Products', () => {
         group: "group 1",
         category: "category 1",
         name: "product 1",
-        price: 7.99,
-        access_token: token
+        price: 7.99
       }
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(incompleteProduct)
           .end((err,res) => {
             expect(res).to.have.status(200);
@@ -189,6 +189,7 @@ describe('Products', () => {
     beforeEach((done) => {
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(product)
           .end((err, res) => { done(); })
     })
@@ -196,7 +197,8 @@ describe('Products', () => {
     it('returns the product details', (done) => {
       mongoose.model('Product').findOne({name: 'test product'}, (err, productInDb) => {
         chai.request(server)
-            .get(`/api/v1/product/${productInDb._id}?access_token=${token}`)
+            .get(`/api/v1/product/${productInDb._id}`)
+            .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('object');
@@ -212,7 +214,8 @@ describe('Products', () => {
 
     it('returns error if unvalid product id is used', (done) => {
       chai.request(server)
-          .get(`/api/v1/product/1?access_token=${token}`)
+          .get(`/api/v1/product/1`)
+          .set('Authorization', `Bearer ${token}`)
           .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -227,6 +230,7 @@ describe('Products', () => {
     beforeEach((done) => {
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(product)
           .end((err, res) => { done(); })
     })
@@ -237,12 +241,12 @@ describe('Products', () => {
         group: "group 2",
         name: "other product",
         price: 17.99,
-        origin: "UK",
-        access_token: token
+        origin: "UK"
       }
       mongoose.model('Product').findOne({name: "test product"}, (err, productInDb) => {
         chai.request(server)
             .put(`/api/v1/product/${productInDb._id}`)
+            .set('Authorization', `Bearer ${token}`)
             .send(updatedProduct)
             .end((err, res) => {
               expect(res).to.have.status(200);
@@ -262,6 +266,7 @@ describe('Products', () => {
     beforeEach((done) => {
       chai.request(server)
           .post('/api/v1/product')
+          .set('Authorization', `Bearer ${token}`)
           .send(product)
           .end((err, res) => { done(); })
     })
@@ -269,14 +274,16 @@ describe('Products', () => {
     it('deletes the product in db', (done) => {
       mongoose.model('Product').findOne({name: "test product"}, (err, productInDb) => {
         chai.request(server)
-            .delete(`/api/v1/product/${productInDb._id}?access_token=${token}`)
+            .delete(`/api/v1/product/${productInDb._id}`)
+            .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('string');
               expect(res.body).to.be.eql("Product has been removed.")
             })
         chai.request(server)
-            .get(`/api/v1/products?access_token=${token}`)
+            .get(`/api/v1/products`)
+            .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('array');
