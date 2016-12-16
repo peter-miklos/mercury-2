@@ -6,6 +6,7 @@ let express = require('express');
     mongoose = require('mongoose');
     db = require('./config/dbConfig');
 
+
 // Don't show the log when it is test
 if(process.env.NODE_ENV != "test") {
   // use morgan to log at command line
@@ -14,6 +15,7 @@ if(process.env.NODE_ENV != "test") {
 
 // app.use(logger('dev'));
 app.use(bodyParser.json());
+
 
 app.all('/*', function(req, res, next) {
   // CORS headers
@@ -28,7 +30,7 @@ app.all('/*', function(req, res, next) {
   }
 })
 
-app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
+// app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
 
 app.use('/', require('./routes'));
 
