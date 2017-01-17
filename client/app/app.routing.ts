@@ -9,7 +9,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'allproducts', component: AllProductsComponent, canActivate: [AuthGuard] },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: '*', redirectTo: '' }
+  { path: '**', redirectTo: '' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

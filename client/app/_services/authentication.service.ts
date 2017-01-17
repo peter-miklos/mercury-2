@@ -13,7 +13,8 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    return this.http.post('http://localhost:4000/login', JSON.stringify({ username: username, password: password}))
+    let headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post('http://localhost:4000/login', JSON.stringify({ username: username, password: password}), {headers})
         .map((response: Response) => {
           let token = response.json() && response.json().token;
           if(token) {
