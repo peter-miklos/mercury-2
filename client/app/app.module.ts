@@ -15,7 +15,7 @@ import { AuthenticationService }  from './_services/authentication.service';
 import { UserService }            from './_services/user.service';
 import { LoginComponent }         from './login/login.component';
 import { HomeComponent }          from './home/home.component';
-import { AllPorductsComponent }   from './products/allProducts.component';
+import { AllProductsComponent }   from './products/allProducts.component';
 
 @NgModule({
   imports:      [
