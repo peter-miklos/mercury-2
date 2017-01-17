@@ -9,15 +9,15 @@ import { Product }                  from '../_models/product.model';
 export class ProductService {
 
   private productUrl = 'http://localhost:4000/api/v1/';
-  private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(
     private http: Http,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private headers = new Headers({'Authorization': `Bearer ${authenticationService.token}`})
   ) {}
 
   getProducts(): Promise<Product[]> {
-    return this.http.get(this.productUrl + 'products', this.headers)
+    return this.http.get(`${this.productUrl}/products`, {headers: this.headers})
                .toPromise()
                .then(res => res.json().data as Product)
                .catch(this.handleError)
@@ -25,7 +25,7 @@ export class ProductService {
 
   getProduct(id: string): Promise<Product> {
     const url = `${this.productUrl}/${id}`;
-    return this.http.get(url, this.headers)
+    return this.http.get(url, {headers: this.headers})
                .toPromise()
                .then(res => res.json().data as Product)
                .catch(this.handleError)
@@ -36,6 +36,22 @@ export class ProductService {
     return this.http.put(url, JSON.stringify(product), {headers: this.headers})
                .toPromise()
                .then(res => res.json().data as Product)
+               .catch(this.handleError)
+  }
+
+  create(product: Product): Promise<Product> {
+    const url = `${this.productUrl}/prdouct`;
+    return this.http.post(url, JSON.stringify(product), {headers: this.headers})
+               .toPromise()
+               .then(res => res.json().data as Product)
+               .catch(this.handleError)
+  }
+
+  delete(id: string): Promise<string> {
+    const url = `${this.productUrl}/${id}`;
+    return this.http.delete(url, {headers: this.headers})
+               .toPromise()
+               .then(res => res.json().data as string)
                .catch(this.handleError)
   }
 
