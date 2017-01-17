@@ -1,6 +1,5 @@
 import { Injectable }               from '@angular/core';
 import { Http, Headers, Response}   from '@angular/http';
-// import { Observable }               from 'rxjs';
 import 'rxjs/add/operator/toPromise';
 
 import { AuthenticationService }    from './authentication.service';
@@ -19,6 +18,14 @@ export class ProductService {
 
   getProducts(): Promise<Product[]> {
     return this.http.get(this.productUrl + 'products', this.headers)
+               .toPromise()
+               .then(res => res.json().data as Product)
+               .catch(this.handleError)
+  }
+
+  getProduct(id: string): Promise<Product> {
+    const url = `${this.productUrl}/${id}`;
+    return this.http.get(url, this.headers)
                .toPromise()
                .then(res => res.json().data as Product)
                .catch(this.handleError)
