@@ -31,6 +31,14 @@ export class ProductService {
                .catch(this.handleError)
   }
 
+  update(product: Product): Promise<Product> {
+    const url = `${this.productUrl}/${product._id}`;
+    return this.http.put(url, JSON.stringify(product), {headers: this.headers})
+               .toPromise()
+               .then(res => res.json().data as Product)
+               .catch(this.handleError)
+  }
+
   private handleError(error: any): Promise<any> {
     console.error("An error occured", error);
     return Promise.reject(error.message || error);
