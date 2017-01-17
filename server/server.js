@@ -5,7 +5,7 @@ let express = require('express');
     app = express();
     mongoose = require('mongoose');
     db = require('./config/dbConfig');
-
+    port = 4000;
 
 // Don't show the log when it is test
 if(process.env.NODE_ENV != "test") {
@@ -13,9 +13,8 @@ if(process.env.NODE_ENV != "test") {
   app.use(logger('combined')); // 'combined' outputs the Apache style logs
 }
 
-// app.use(logger('dev'));
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.all('/*', function(req, res, next) {
   // CORS headers
@@ -30,8 +29,6 @@ app.all('/*', function(req, res, next) {
   }
 })
 
-// app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
-
 app.use('/', require('./routes'));
 
 app.use(function(req, res, next) {
@@ -40,8 +37,8 @@ app.use(function(req, res, next) {
   next(err);
 })
 
-app.listen(3001, function() {
-  console.log("Express server listening on port 3001")
+app.listen(port, function() {
+  console.log("Express server listening on port " + port)
 })
 
 module.exports = app;
