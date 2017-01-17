@@ -6,6 +6,7 @@ import { MdIconModule }   from '@angular2-material/icon';
 import { MdIconRegistry } from '@angular2-material/icon';
 
 import { AppComponent }   from './app.component';
+import { AuthGuard }      from './_guards/auth.guard';
 
 @NgModule({
   imports:      [
@@ -16,6 +17,9 @@ import { AppComponent }   from './app.component';
   ],
   declarations: [ AppComponent ],
   bootstrap:    [ AppComponent ],
-  providers:    [ MdIconRegistry ]
+  providers:    [
+    MdIconRegistry,
+    AuthGuard
+  ]
 })
 export class AppModule { }
