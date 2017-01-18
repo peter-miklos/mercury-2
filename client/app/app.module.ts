@@ -8,7 +8,7 @@ import { MdIconModule }           from '@angular2-material/icon';
 import { MdIconRegistry }         from '@angular2-material/icon';
 
 import { AppComponent }           from './app.component';
-import { routing }                from './app.routing';
+import { AppRoutingModule }             from './app-routing.module';
 
 import { AuthGuard }              from './_guards/auth.guard';
 import { AuthenticationService }  from './_services/authentication.service';
@@ -16,14 +16,15 @@ import { UserService }            from './_services/user.service';
 import { ProductService }         from './_services/product.service';
 import { LoginComponent }         from './login/login.component';
 import { HomeComponent }          from './home/home.component';
-import { ProductsComponent }   from './products/products.component';
+import { ProductsComponent }      from './products/products.component';
+import { ProductDetailComponent }  from './products/product-detail.component';
 
 @NgModule({
   imports:      [
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing,
+    AppRoutingModule,
     MdCardModule,
     MdButtonModule,
     MdIconModule
@@ -32,7 +33,8 @@ import { ProductsComponent }   from './products/products.component';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductDetailComponent
   ],
   bootstrap:    [ AppComponent ],
   providers:    [
