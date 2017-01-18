@@ -10,7 +10,8 @@ export class ProductService {
 
   private productUrl = 'http://localhost:4000/api/v1';
   private headers = new Headers({
-    'Authorization': `Bearer ${this.authenticationService.token}`
+    'Authorization': `Bearer ${this.authenticationService.token}`,
+    'Content-Type': 'application/json'
   });
 
   constructor(
@@ -43,7 +44,7 @@ export class ProductService {
   }
 
   create(product: Product): Promise<Product> {
-    const url = `${this.productUrl}/prdouct`;
+    const url = `${this.productUrl}/product`;
     return this.http.post(url, JSON.stringify(product), { headers: this.headers})
                .toPromise()
                .then(res => res.json().data as Product)

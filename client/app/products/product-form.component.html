@@ -1,0 +1,35 @@
+<h2>Add new product</h2>
+<form name="form" (ngSubmit)="f.form.valid && submit()" #f="ngForm">
+  <div class="">
+    <label for="name">Name</label>
+    <input type="text" name="name" placeholder="Add name" [(ngModel)]="model.name" #name="ngModel" required/>
+    <div class="" *ngIf="f.submitted && !name.valid">Product name is required</div>
+  </div>
+  <div class="">
+    <label for="category">Category</label>
+    <input type="text" name="category" placeholder="Add a category" [(ngModel)]="model.category" #category="ngModel" required/>
+    <div class="" *ngIf="f.submitted && !category.valid">Product category is required</div>
+  </div>
+  <div class="">
+    <label for="group">Product group</label>
+    <input type="text" name="group" placeholder="Add a product group" [(ngModel)]="model.group" #group="ngModel" required>
+    <div class="" *ngIf="f.submitted && !group.valid">Product group is required</div>
+  </div>
+  <div class="">
+    <label for="price">Price</label>
+    <input type="number" name="price" placeholder="Add a unit price" min="1" [(ngModel)]="model.price" #price="ngModel" required>
+    <div class="" *ngIf="f.submitted && !price.valid">Product price is required</div>
+  </div>
+  <div class="">
+    <label for="origin">Product origin</label>
+    <input type="text" name="origin" placeholder="Add the product origin" [(ngModel)]="model.origin" #origin="ngModel" required>
+    <div class="" *ngIf="f.submitted && !origin.valid">Product origin is required</div>
+  </div>
+  <div *ngIf="!loading">
+    <button name="back" (click)="goBack()">Go back</button>
+    <button name="submit" class="">Submit</button>
+  </div>
+  <div class="" *ngIf="loading">
+    Submitting...
+  </div>
+</form>
