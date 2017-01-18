@@ -22,7 +22,7 @@ export class ProductService {
   getProducts(): Promise<Product[]> {
     return this.http.get(`${this.productUrl}/products`, { headers: this.headers})
                .toPromise()
-               .then(res => res.json().data as Product)
+               .then(res => res.json() as Product[])
                .catch(this.handleError)
   }
 

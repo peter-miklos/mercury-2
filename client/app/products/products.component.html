@@ -1,1 +1,21 @@
 <h2>All products</h2>
+<ul>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Category</th>
+      <th>Group</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Origin</th>
+    </tr>
+  </table>
+    <tr *ngFor="let product of products">
+      <td>{{product._id}}</td>
+      <td>{{product.category}}</td>
+      <td>{{product.group}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.price}}</td>
+      <td>{{product.origin}}</td>
+    </tr>
+</ul>
