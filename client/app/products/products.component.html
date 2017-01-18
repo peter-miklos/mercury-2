@@ -10,7 +10,9 @@
       <th>Origin</th>
     </tr>
   </table>
-    <tr *ngFor="let product of products">
+    <tr *ngFor="let product of products"
+        [class.selected]="product === selectedProduct"
+        (click)="onSelect(product)">
       <td>{{product._id}}</td>
       <td>{{product.category}}</td>
       <td>{{product.group}}</td>
@@ -19,3 +21,7 @@
       <td>{{product.origin}}</td>
     </tr>
 </ul>
+
+<div class="" *ngIf="selectedProduct">
+  Selected product: <span>{{selectedProduct.price | currency}}</span>
+</div>
