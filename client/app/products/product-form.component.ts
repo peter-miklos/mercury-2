@@ -11,7 +11,8 @@ import { ProductService }   from '../_services/product.service';
 })
 
 export class ProductFormComponent {
-  model: any = {};
+  private model: any = {};
+  private loading = false;
 
   constructor(
     private productService: ProductService,
@@ -23,7 +24,11 @@ export class ProductFormComponent {
   }
 
   submit(): void {
+    this.loading = true;
     this.productService.create(this.model)
-        .then(() => this.goBack())
+        .then(() => {
+          this.loading = false;
+          this.goBack();
+        })
   }
 }

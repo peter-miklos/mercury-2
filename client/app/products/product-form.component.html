@@ -25,8 +25,11 @@
     <input type="text" name="origin" placeholder="Add the product origin" [(ngModel)]="model.origin" #origin="ngModel" required>
     <div class="" *ngIf="f.submitted && !origin.valid">Product origin is required</div>
   </div>
-  <p>
+  <div *ngIf="!loading">
     <button name="back" (click)="goBack()">Go back</button>
     <button name="submit" class="">Submit</button>
-  </p>
+  </div>
+  <div class="" *ngIf="loading">
+    Submitting...
+  </div>
 </form>
