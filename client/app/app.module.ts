@@ -13,9 +13,10 @@ import { routing }                from './app.routing';
 import { AuthGuard }              from './_guards/auth.guard';
 import { AuthenticationService }  from './_services/authentication.service';
 import { UserService }            from './_services/user.service';
+import { ProductService }         from './_services/product.service';
 import { LoginComponent }         from './login/login.component';
 import { HomeComponent }          from './home/home.component';
-import { AllProductsComponent }   from './products/allProducts.component';
+import { ProductsComponent }   from './products/products.component';
 
 @NgModule({
   imports:      [
@@ -31,14 +32,15 @@ import { AllProductsComponent }   from './products/allProducts.component';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    AllProductsComponent
+    ProductsComponent
   ],
   bootstrap:    [ AppComponent ],
   providers:    [
     MdIconRegistry,
     AuthGuard,
     AuthenticationService,
-    UserService
+    UserService,
+    ProductService
   ]
 })
 export class AppModule { }
