@@ -1,1 +1,44 @@
 <h2>Product details</h2>
+
+<div class="" *ngIf="!loading">
+  <div class="" *ngIf="product">
+    <h3>Product: {{product.name}}</h3>
+    <form name="product-detail" #f='ngForm' (ngSubmit)="f.form.valid && update()">
+      <div class="">
+        <label for="name">Name</label>
+        <input type="text" name="name" placeholder="Add name" [(ngModel)]="product.name" #name="ngModel" required/>
+        <div *ngIf="f.submitted && !name.valid">Product name is required</div>
+      </div>
+      <div class="">
+        <label for="category">Category</label>
+        <input type="text" name="category" placeholder="Add a category" [(ngModel)]="product.category" #category="ngModel" required/>
+        <div *ngIf="f.submitted && !category.valid">Product category is required</div>
+      </div>
+      <div class="">
+        <label for="group">Product group</label>
+        <input type="text" name="group" placeholder="Add a product group" [(ngModel)]="product.group" #group="ngModel" required>
+        <div *ngIf="f.submitted && !group.valid">Product group is required</div>
+      </div>
+      <div class="">
+        <label for="price">Price</label>
+        <input type="number" name="price" placeholder="Add a unit price" min="1" [(ngModel)]="product.price" #price="ngModel" required>
+        <div *ngIf="f.submitted && !price.valid">Product price is required</div>
+      </div>
+      <div class="">
+        <label for="origin">Product origin</label>
+        <input type="text" name="origin" placeholder="Add the product origin" [(ngModel)]="product.origin" #origin="ngModel" required>
+        <div *ngIf="f.submitted && !origin.valid">Product origin is required</div>
+      </div>
+      <div>
+        <button *ngIf="product || !product" name="back" (click)="goBack()">Go back</button>
+        <button name="submit">Update</button>
+      </div>
+    </form>
+  </div>
+  <div class="" *ngIf="!product">
+    Product details could not be retreived. Please go back and try it again.
+  </div>
+</div>
+<div class="" *ngIf="loading">
+  Submitting...
+</div>

@@ -28,15 +28,15 @@ export class ProductService {
   }
 
   getProduct(id: string): Promise<Product> {
-    const url = `${this.productUrl}/${id}`;
+    const url = `${this.productUrl}/product/${id}`;
     return this.http.get(url, { headers: this.headers})
                .toPromise()
-               .then(res => res.json().data as Product)
+               .then(res => res.json() as Product)
                .catch(this.handleError)
   }
 
   update(product: Product): Promise<Product> {
-    const url = `${this.productUrl}/${product._id}`;
+    const url = `${this.productUrl}/product/${product._id}`;
     return this.http.put(url, JSON.stringify(product), { headers: this.headers})
                .toPromise()
                .then(res => res.json().data as Product)

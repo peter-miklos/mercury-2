@@ -2,7 +2,6 @@
 <ul>
   <table>
     <tr>
-      <th>ID</th>
       <th>Category</th>
       <th>Group</th>
       <th>Name</th>
@@ -13,7 +12,6 @@
     <tr *ngFor="let product of products"
         [class.selected]="product === selectedProduct"
         (click)="onSelect(product)">
-      <td>{{product._id}}</td>
       <td>{{product.category}}</td>
       <td>{{product.group}}</td>
       <td>{{product.name}}</td>
@@ -23,5 +21,6 @@
 </ul>
 
 <div class="" *ngIf="selectedProduct">
-  Selected product: <span>{{selectedProduct.price | currency}}</span>
+  Selected product: <span><b>{{selectedProduct.name}}</b> (price: {{selectedProduct.price | currency}})</span>
+  <button type="button" name="viewDetails" (click)="goToDetail()">View details</button>
 </div>

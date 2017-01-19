@@ -1,4 +1,10 @@
-import { Component }              from '@angular/core';
+import { Component, OnInit }        from '@angular/core';
+import { ActivatedRoute, Params }   from '@angular/router';
+import { Location }                 from '@angular/common';
+import 'rxjs/add/operator/switchMap';
+
+import { ProductService }           from '../_services/product.service';
+import { Product }                  from '../_models/product.model';
 
 @Component({
   moduleId: module.id,
@@ -7,6 +13,30 @@ import { Component }              from '@angular/core';
   styleUrls: []
 })
 
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnInit {
+  private product: Product;
+  private loading = false;
+
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private location: Location
+  ){}
+
+  ngOnInit(): void {
+    this.route.params
+        .switchMap((params: Params) => this.productService.getProduct(params['id']))
+        .subscribe(product => this.product = product);
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  update(): void {
+    this.loading = true;
+    this.productService.update(this.product)
+        .then(() => this.goBack());
+  }
 
 }
