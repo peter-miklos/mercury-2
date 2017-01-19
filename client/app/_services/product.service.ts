@@ -28,10 +28,10 @@ export class ProductService {
   }
 
   getProduct(id: string): Promise<Product> {
-    const url = `${this.productUrl}/${id}`;
+    const url = `${this.productUrl}/product/${id}`;
     return this.http.get(url, { headers: this.headers})
                .toPromise()
-               .then(res => res.json().data as Product)
+               .then(res => res.json() as Product)
                .catch(this.handleError)
   }
 
