@@ -36,7 +36,7 @@ export class ProductService {
   }
 
   update(product: Product): Promise<Product> {
-    const url = `${this.productUrl}/${product._id}`;
+    const url = `${this.productUrl}/product/${product._id}`;
     return this.http.put(url, JSON.stringify(product), { headers: this.headers})
                .toPromise()
                .then(res => res.json().data as Product)

@@ -15,6 +15,7 @@ import { Product }                  from '../_models/product.model';
 
 export class ProductDetailComponent implements OnInit {
   private product: Product;
+  private loading = false;
 
   constructor(
     private productService: ProductService,
@@ -28,5 +29,14 @@ export class ProductDetailComponent implements OnInit {
         .subscribe(product => this.product = product);
   }
 
+  goBack(): void {
+    this.location.back();
+  }
+
+  update(): void {
+    this.loading = true;
+    this.productService.update(this.product)
+        .then(() => this.goBack());
+  }
 
 }
