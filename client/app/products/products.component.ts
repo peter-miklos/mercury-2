@@ -35,4 +35,12 @@ export class ProductsComponent implements OnInit {
   goToDetail(): void {
     this.router.navigate(['/products', this.selectedProduct._id]);
   }
+
+  delete(product: Product): void {
+    this.productService.delete(product._id)
+        .then(() => {
+          this.products = this.products.filter(p => p != product);
+          if (this.selectedProduct === product) {this.selectedProduct = null; }
+        })
+  }
 }
