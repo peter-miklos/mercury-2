@@ -52,7 +52,7 @@ export class ProductService {
   }
 
   delete(id: string): Promise<string> {
-    const url = `${this.productUrl}/${id}`;
+    const url = `${this.productUrl}/product/${id}`;
     return this.http.delete(url, { headers: this.headers})
                .toPromise()
                .then(res => res.json().data as string)
