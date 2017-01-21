@@ -13,13 +13,13 @@ import { ProductService }   from '../_services/product.service';
 
 export class ProductFormComponent {
   // private model: any = {};
-  private productForm: FormGroup;
+  productForm: FormGroup;
   private loading = false;
 
   constructor(
     private productService: ProductService,
     private location: Location,
-    private fb: FormBuilder
+    fb: FormBuilder
   ){
     this.productForm = fb.group({
       'name': [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)])],
