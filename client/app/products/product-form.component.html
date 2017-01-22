@@ -1,5 +1,5 @@
 <h2>Add new product</h2>
-<form [formGroup]="productForm" (ngSubmit)="submit(productForm.value)">
+<form [formGroup]="productForm" (ngSubmit)="submit()">
   <div class="" [ngClass]="{'has-error':!productForm.controls['name'].valid && productForm.controls['name'].touched}">
     <label for="name">Name</label>
     <input type="text" name="name" placeholder="Add name" [formControl]="productForm.controls['name']"/>

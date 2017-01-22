@@ -34,9 +34,9 @@ export class ProductFormComponent {
     this.location.back();
   }
 
-  submit(value: any): void {
+  submit(): void {
     this.loading = true;
-    this.productService.create(value)
+    this.productService.create(this.productForm.value)
         .then(() => {
           this.loading = false;
           this.goBack();
