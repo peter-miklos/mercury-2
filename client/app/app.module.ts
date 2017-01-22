@@ -1,6 +1,6 @@
 import { NgModule }                 from '@angular/core';
 import { BrowserModule }            from '@angular/platform-browser';
-import { FormsModule }              from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule }               from '@angular/http';
 import { MdCardModule }             from '@angular2-material/card';
 import { MdButtonModule }           from '@angular2-material/button';
@@ -24,6 +24,7 @@ import { ProductFormComponent }     from './products/product-form.component';
   imports:      [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
     MdCardModule,
